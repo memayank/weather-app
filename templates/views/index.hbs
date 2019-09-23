@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+</head>
+<body>
+    {{>header}}
+    <h1>
+
+        Check it out
+    </h1>
+
+
+    <form>
+        <input placeholder="loacation">
+        <button>Search</button>
+    </form>
+
+<div id="error" class="alert alert-danger">
+
+</div>
+
+    <div id="temprature" class="alert alert-success">
+
+    </div>
+    <div id="preci" class="alert alert-success">
+
+    </div>
+
+    {{>footer}}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    console.log("file is checked for js")
+
+    fetch('http://localhost:3000/weather?address=bhopal').then((response)=>{
+
+        response.json().then((data)=>{
+            console.log(data)
+        })
+
+    })
+
+   const locationForm = document.querySelector('form')
+   const search = document.querySelector('input')
+   const temp = document.querySelector('#temprature')
+   const preci = document.querySelector('#preci')
+   const error = document.querySelector('#error')
+
+    locationForm.addEventListener('submit',(event)=>{
+        event.preventDefault()
+        console.log(search.value)
+        console.log("submitted succesgully")
+        fetch('http://localhost:3000/weather?address='+ search.value).then((response) => {
+
+            
+            response.json().then((data) => {
+                console.log(data.response.Temprature)
+                console.log(data.response.Precipitation)
+                preci.textContent = "Precipitation is" + data.response.Temprature
+                temp.textContent = "temprature is" + data.response.Precipitation
+            })
+
+        })
+    })
+
+
+</script>
+
+</body>
+</html>
